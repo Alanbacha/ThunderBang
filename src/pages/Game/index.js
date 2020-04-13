@@ -12,32 +12,41 @@ export default function Game() {
 	const [card, setCard] = useState([]);
 
 	const [rules, setRules] = useState([]);
+	const [countRules, setCountRules] = useState(0);
 
 	useEffect(() => {
-		loadCards();
-	}, []);
-
-	function loadCards() {
 		api.get("cards").then((res) => {
 			setCards(res.data);
 
 			const c = res.data[math.randomInt(res.data.length)];
 			setCard(c);
 		});
-	}
+	}, [math]);
+
+	useEffect(() => {
+		api.get("rules").then((res) => {
+			setRules(res.data);
+		});
+	}, []);
 
 	function handleNewCard() {
 		const c = cards[math.randomInt(cards.length)];
 		setCard(c);
 	}
 
-	function handleNewRules(description, active) {
-		const r = { description: description, active: active };
-		setRules(rules.push(r));
+	function handleNewRules() {
+		let ruleDescription = prompt();
+		setCountRules(countRules + 1);
+		const r = { id: countRules, description: ruleDescription, active: true };
+		rules.push(r);
+		setRules(rules);
 	}
 
 	function handleChangeRuleStatus(rule) {
-		rule.active = !rule.active;
+		let v = [...rules];
+		let i = v.findIndex((obj) => obj.id === rule.id);
+		v[i].active = !rule.active;
+		setRules(v);
 	}
 
 	return (
@@ -45,10 +54,9 @@ export default function Game() {
 			<div className="content portrait-flex-direction-column">
 				<section className="playing-card">
 					<h2>
-						<label class="card">{card.name}</label>
+						<label className="card">{card.name}</label>
 					</h2>
-
-					<div class="text">
+					<div className="text">
 						<div className="language pt-br">
 							<p>{card.description_PtBr}</p>
 						</div>
@@ -61,7 +69,6 @@ export default function Game() {
 							<p>{card.description_FrCa}</p>
 						</div>
 					</div>
-
 					<button className="button" onClick={handleNewCard}>
 						<span className="language pt-br">Próxima</span>
 						<span className="language en-ca">Next</span>
@@ -79,19 +86,26 @@ export default function Game() {
 					<div className="text">
 						<ul className="rule-list">
 							{rules
-								.filter((r) => r.active === true)
+								.filter((r) => {
+									return r.active === true;
+								})
 								.map((r) => (
-									<li>{r}</li>
+									<li
+										key={r.id}
+										onClick={() => {
+											handleChangeRuleStatus(r);
+										}}
+									>
+										{r.description ? <span>{r.description}</span> : ""}
+										<span className="language pt-br">{r.description_PtBr}</span>
+										<span className="language en-ca">{r.description_EnCa}</span>
+										<span className="language fr-ca">{r.description_FrCa}</span>
+									</li>
 								))}
 						</ul>
 					</div>
 
-					<button
-						className="button"
-						onClick={() => {
-							handleNewRules("a", true);
-						}}
-					>
+					<button className="button" onClick={handleNewRules}>
 						<span className="language pt-br">Nova regra</span>
 						<span className="language en-ca">New rule</span>
 						<span className="language fr-ca">Nouvelle Règle</span>
@@ -108,23 +122,24 @@ export default function Game() {
 					<div className="text">
 						<ul className="rule-list">
 							{rules
-								.filter((r) => r.active === false)
+								.filter((r) => {
+									return r.active === false;
+								})
 								.map((r) => (
-									<li>{r}</li>
+									<li
+										key={r.id}
+										onClick={() => {
+											handleChangeRuleStatus(r);
+										}}
+									>
+										{r.description ? <span>{r.description}</span> : ""}
+										<span className="language pt-br">{r.description_PtBr}</span>
+										<span className="language en-ca">{r.description_EnCa}</span>
+										<span className="language fr-ca">{r.description_FrCa}</span>
+									</li>
 								))}
 						</ul>
 					</div>
-
-					<button
-						className="button"
-						onClick={() => {
-							handleNewRules("b", false);
-						}}
-					>
-						<span className="language pt-br">Nova regra</span>
-						<span className="language en-ca">New rule</span>
-						<span className="language fr-ca">Nouvelle Règle</span>
-					</button>
 				</section>
 			</div>
 		</Layout>
