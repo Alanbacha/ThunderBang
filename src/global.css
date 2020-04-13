@@ -24,6 +24,11 @@ textarea {
 	font: 400 14px Roboto, sans-serif;
 }
 
+h2 {
+	display: flex;
+	height: auto;
+}
+
 .container button {
 	cursor: pointer;
 	display: flex;
@@ -53,6 +58,7 @@ textarea {
 	width: 100%;
 	height: 100%;
 	flex-direction: column;
+	overflow: auto;
 }
 
 .container strong {
@@ -143,11 +149,10 @@ textarea {
 .container .content {
 	width: 100%;
 	height: calc(100% - 50px);
-	padding: 20px;
 	background: #f0f0f0;
-
+	padding: 10px 0;
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-items: center;
 }
 
