@@ -1,0 +1,77 @@
+.playing-cards {
+	max-height: calc(100% - 40px);
+}
+.playing-cards .playing-card {
+	display: none;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+}
+
+@media (orientation: landscape) {
+	.playing-cards .playing-card {
+		flex-direction: row;
+	}
+	.playing-cards .playing-card .playing-card-container {
+		max-height: unset !important;
+		width: auto !important;
+	}
+}
+
+.playing-cards .playing-card .playing-card-container {
+	display: flex;
+	height: 100%;
+	max-height: 50%;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	border-bottom: solid 1px #ccc;
+	padding: 10px;
+	background-color: #636c92;
+}
+
+.playing-cards .playing-card .playing-card-container img {
+	height: 100%;
+}
+
+.playing-cards .playing-card .description {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	background-color: #f0f0f0;
+}
+
+.playing-cards .playing-card .description li {
+	width: 100%;
+	height: 100%;
+	flex-direction: column;
+	padding: 10px;
+	align-items: center;
+	justify-content: start;
+}
+
+.playing-cards .playing-card .description li strong {
+	font-size: 16px;
+}
+.playing-cards .playing-card .description li p {
+	font-size: 16px;
+	margin-top: 10px;
+	overflow: auto;
+}
+
+.playing-cards-A .playing-card-A,
+.playing-cards-2 .playing-card-2,
+.playing-cards-3 .playing-card-3,
+.playing-cards-4 .playing-card-4,
+.playing-cards-5 .playing-card-5,
+.playing-cards-6 .playing-card-6,
+.playing-cards-7 .playing-card-7,
+.playing-cards-8 .playing-card-8,
+.playing-cards-9 .playing-card-9,
+.playing-cards-10 .playing-card-10,
+.playing-cards-J .playing-card-J,
+.playing-cards-Q .playing-card-Q,
+.playing-cards-K .playing-card-K,
+.playing-cards-Joker .playing-card-Joker {
+	display: flex;
+}
